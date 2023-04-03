@@ -1,18 +1,15 @@
 ﻿using Business.Abstractions.Interfaces.Services;
-using Business.Abstractions.IO.Product;
+using Business.Abstractions.IO.Store;
 using Business.Abstractions.IO.User;
 using Business.Abstractions.IO.UserStore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
-
 namespace Api.Controllers
 {
 
     [ApiController]
     [Route("api/[controller]/")]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private IUserService _service;
         private ITokenService _tokenService;
@@ -27,29 +24,35 @@ namespace Api.Controllers
         [HttpPost("authenticate")]
         public async Task<ActionResult<AuthenticationResult>> Authenticate([FromBody] AuthenticateInput model)
         {
-            var user = await _service.AuthenticateAsync(model.Login, model.Password);
-
-            if (user == null || string.IsNullOrEmpty(user.Nome))
-                return new AuthenticationResult { Success = false, Message = "Usuário ou senha inválidos" };
-
-            var token = _tokenService.GenerateToken(user);
-
-            user.Senha = "";
-
-            if(token.Any())
+            if (!string.IsNullOrEmpty(model.Login) && !string.IsNullOrEmpty(model.Password)) 
             {
-                return Ok(new AuthenticationResult
+                var user = await _service.AuthenticateAsync(model.Login, model.Password);
+
+                if (user == null || string.IsNullOrEmpty(user.Nome))
+                    return new AuthenticationResult { Success = false, Message = "Usuário ou senha inválidos" };
+
+                var token = _tokenService.GenerateToken(user);
+
+                user.Senha = "";
+
+                if (token.Any())
                 {
-                    Success = true,
-                    Message = "Seja bem-vindo!",
-                    User = user,
-                    Token = token
-                });
+                    return Ok(new AuthenticationResult
+                    {
+                        Success = true,
+                        Message = "Seja bem-vindo!",
+                        User = user,
+                        Token = token
+                    });
+                }
+                else
+                {
+                    return BadRequest(new AuthenticationResult { Success = false, Message = "Usuário ou senha inválidos" });
+                }
             } else
             {
                 return BadRequest(new AuthenticationResult { Success = false, Message = "Usuário ou senha inválidos" });
             }
-
         }
 
         [AllowAnonymous]
@@ -83,13 +86,28 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] UserFilter userFilter)
         {
+            var idUserStores = IdsUserStoresSession();
+            if (idUserStores != null)
+            {
+                userFilter.ListIdStore = idUserStores.ToList();
+            }
+            else if(!UserIsManagerSession())
+            {
+                return BadRequest(new { Success = false, Message = "Usuario não possui loja viculada!" });
+            }
             return Ok(await _service.GetListAsync(userFilter));
         }
         [AllowAnonymous]
         [HttpGet("user-stores-linked-unlinked/{id}")]
         public async Task<IActionResult> GetListUserStoresLinkedUnlinked(int id)
         {
-            return Ok(await _service.GetListUserStoresLinkedUnlinkedAsync(id));
+            List<int> idUserStores = new();
+            if (!UserIsManagerSession())
+            {
+                idUserStores = IdsUserStoresSession().ToList();
+            }
+
+            return Ok(await _service.GetListUserStoresLinkedUnlinkedAsync(id, idUserStores));
         }
         [AllowAnonymous]
         [HttpPost("user-stores-linked-unlinked")]

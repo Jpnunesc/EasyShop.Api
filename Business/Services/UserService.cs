@@ -83,10 +83,10 @@ namespace Business.Services
             return _resultOutput.OperationOutputSuccess(UserOutput, Messages.SuccessMessage);
         }
 
-        public async Task<IResultOutput<UserStoresLinkedUnlinkedOutput>> GetListUserStoresLinkedUnlinkedAsync(int id)
+        public async Task<IResultOutput<UserStoresLinkedUnlinkedOutput>> GetListUserStoresLinkedUnlinkedAsync(int id, List<int> idUserStores)
         {
             var retorno = new ResultOutput<UserStoresLinkedUnlinkedOutput>();
-            var (storeLinkedEntity, storeUnlinkedEntity) = await _userRepository.GetListUserStoresLinkedUnlinkedAsync(id);
+            var (storeLinkedEntity, storeUnlinkedEntity) = await _userRepository.GetListUserStoresLinkedUnlinkedAsync(id, idUserStores);
             var storesLinkedOutput = _mapper.Map<IEnumerable<StoreEntity>, IEnumerable<StoreOutput>>(storeLinkedEntity);
             var storesUnlinkedOutput = _mapper.Map<IEnumerable<StoreEntity>, IEnumerable<StoreOutput>>(storeUnlinkedEntity);
             return retorno.OperationOutputSuccess(new() { StoreLinked = storesLinkedOutput, StoreUnlinked = storesUnlinkedOutput }, Messages.SuccessMessage);

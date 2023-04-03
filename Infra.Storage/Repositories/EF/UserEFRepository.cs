@@ -31,9 +31,20 @@ namespace Infra.Storage.Repositories.EF
 
         public async Task<UserAuthOutput> AuthenticateAsync(string username, string password)
         {
-            if (username == "sup" && password == "sup")
+           var user = await _context.Users.Where(x => x.Email == username && x.Password == password).FirstOrDefaultAsync();
+
+            if (user != null)
             {
-                return await Task.Run(() => new UserAuthOutput { Nome = "sup", Senha = "sup", Role = "manager" });
+                var lojas = await _context.UserStores
+                                            .Include(i => i.Store)
+                                            .AsNoTracking()
+                                            .Where(x => x.IdUser == user.IdUser)
+                                            .Select(x => new UserStoreAuthOutput
+                                                                                { IdStore = x.IdStore,
+                                                                                    Name = x.Store.Name 
+                                                                                }).ToListAsync();
+
+                return new UserAuthOutput { Nome = user.Name, Senha = "", Role = user.Role == 1 ? "manager" : "loja", userStores = lojas };
             }
             return new();
 
@@ -108,6 +119,12 @@ namespace Infra.Storage.Repositories.EF
                 query = query.Where(s => s.PhoneNumber == userFilter.PhoneNumber.Value);
             }
 
+            if (userFilter.ListIdStore != null && userFilter.ListIdStore.Any())
+            {
+                var idUsers = _context.UserStores.Where(x => userFilter.ListIdStore.Contains(x.IdStore)).Select(s => s.IdUser).ToList();
+                query = query.Where(s => idUsers.Contains(s.IdUser));
+            }
+
             //if (!string.IsNullOrEmpty(storeFilter.SortField))
             //{
             //    query = query.OrderBy($"{storeFilter.SortField} {storeFilter.SortOrder ?? "ASC"}");
@@ -124,11 +141,20 @@ namespace Infra.Storage.Repositories.EF
             return (userList, totalRecords);
         }
 
-        public async Task<(IEnumerable<StoreEntity> LinkedOutput, IEnumerable<StoreEntity> UnlinkedOutput)> GetListUserStoresLinkedUnlinkedAsync(int id)
+        public async Task<(IEnumerable<StoreEntity> LinkedOutput, IEnumerable<StoreEntity> UnlinkedOutput)> GetListUserStoresLinkedUnlinkedAsync(int id, List<int> idUserStores)
         {
             var IdStoreLinked = _context.UserStores.Where(x => x.IdUser == id).Select(s => s.IdStore).ToList();
             var linkedOutput = IdStoreLinked.Any() ? await _context.Stores.Where(x => IdStoreLinked.Contains(x.IdStore)).ToListAsync() : new List<StoreEntity>();
-            var unlinkedOutput = IdStoreLinked.Any() ? await _context.Stores.Where(x => !IdStoreLinked.Contains(x.IdStore) && x.Status == true).ToListAsync() : await _context.Stores.Where(x => x.Status == true).ToListAsync();
+            var queryLinkedOutput = _context.Stores.Where(x => x.Status == true).AsQueryable();
+            if (idUserStores.Any())
+            {
+                queryLinkedOutput = queryLinkedOutput.Where(x => idUserStores.Contains(x.IdStore));
+            }
+            if(IdStoreLinked.Any())
+            {
+                queryLinkedOutput = queryLinkedOutput.Where(x => !IdStoreLinked.Contains(x.IdStore));
+            }
+            var unlinkedOutput = await queryLinkedOutput.ToListAsync();
 
             return (linkedOutput, unlinkedOutput);
         }

@@ -13,7 +13,7 @@ namespace Business.Abstractions.Interfaces.EFRepository
         Task<UserEntity> GetByIdAsync(int? idUser);
         Task DeleteAsync(UserEntity userEntity);
         Task<(IEnumerable<UserEntity> UserEntity, int totalRecords)> GetListAsync(UserFilter storeFilter);
-        Task<(IEnumerable<StoreEntity> LinkedOutput, IEnumerable<StoreEntity> UnlinkedOutput)> GetListUserStoresLinkedUnlinkedAsync(int id);
+        Task<(IEnumerable<StoreEntity> LinkedOutput, IEnumerable<StoreEntity> UnlinkedOutput)> GetListUserStoresLinkedUnlinkedAsync(int id, List<int> idUserStores);
         Task<IEnumerable<UserStoreEntity>> PostListUserStoresLinkedUnlinkedAsync(IEnumerable<UserStoreEntity> userStoreEntity);
         Task DeleteUserStoresLinkedAsync(int id);
     }

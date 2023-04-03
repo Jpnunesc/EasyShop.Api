@@ -28,7 +28,7 @@ namespace Business.Abstractions.IO.Store
         {
             get
             {
-                if (Image == null || Image.Length == 0) return null;
+                if (Image == null || Image.Length == 0) return string.Empty;
                 return $"data:image/png;base64,{Convert.ToBase64String(Image)}";
             }
         }

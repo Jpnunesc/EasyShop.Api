@@ -10,5 +10,6 @@ namespace Business.Abstractions.Interfaces.Services
     public interface ITokenService
     {
         string GenerateToken(UserAuthOutput user);
+        List<UserStoreAuthOutput> GetUserStoresFromToken(string token);
     }
 }

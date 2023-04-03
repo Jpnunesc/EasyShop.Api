@@ -1,6 +1,4 @@
-﻿using Business.Abstractions.IO.Product;
-using Business.Abstractions.IO.Store;
-using Business.Abstractions.IO.User;
+﻿using Business.Abstractions.IO.User;
 using FluentValidation;
 using System;
 using System.Collections.Generic;

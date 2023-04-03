@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business.Abstractions.IO.Product;
+using Business.Abstractions.IO.StoreProduct;
 using Business.Abstractions.IO.Store;
 using Business.Abstractions.IO.Supplier;
 using Business.Abstractions.IO.User;
@@ -12,11 +12,12 @@ namespace Presentation.Api.AutoMapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<ProductUpdateInput, ProductEntity>()
+            CreateMap<StoreProductUpdateInput, StoreProductEntity>()
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ConvertIFormFileToByte()));
-            CreateMap<ProductInsertInput, ProductEntity>()
+            CreateMap<StoreProductInsertInput, StoreProductEntity>()
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ConvertIFormFileToByte()));
-            CreateMap<ProductEntity, ProductOutput>();
+
+            CreateMap<StoreProductEntity, StoreProductOutput>();
 
             CreateMap<UserEntity, UserOutput>();
             CreateMap<UserInsertInput, UserEntity>();

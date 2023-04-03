@@ -1,4 +1,4 @@
-﻿using Business.Abstractions.IO.Product;
+﻿using Business.Abstractions.IO.StoreProduct;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -6,17 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Validations.Product
+namespace Business.Validations.StoreProduct
 {
-    public class ProductInsertValidation : AbstractValidator<ProductInsertInput>
+    public class StoreProductInsertValidation : AbstractValidator<StoreProductInsertInput>
     {
-        public ProductInsertValidation()
+        public StoreProductInsertValidation()
         {
-            RuleFor(f => f.Name)
+            RuleFor(f => f.Description)
               .NotEmpty().WithMessage("Campo Nome obrigatório!");
-
-            RuleFor(f => f.Sku)
-                .NotEmpty().WithMessage("Campo Código de barras é obrigatório!");
 
             RuleFor(f => f.CodeCEST)
                 .NotEmpty().WithMessage("Campo CodeCEST é obrigatório!");
@@ -24,11 +21,8 @@ namespace Business.Validations.Product
             RuleFor(f => f.CodeNCM)
                 .NotEmpty().WithMessage("Campo CodeNCM é obrigatório!");
 
-            RuleFor(f => f.Price)
+            RuleFor(f => f.IdStore)
                 .NotEmpty().WithMessage("Campo Preço é obrigatório!");
-
-            RuleFor(f => f.Status)
-                .NotEmpty().WithMessage("Campo Status obrigatório!");
         }
     }
 }

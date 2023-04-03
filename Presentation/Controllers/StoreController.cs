@@ -1,5 +1,5 @@
 ﻿using Business.Abstractions.Interfaces.Services;
-using Business.Abstractions.IO.Product;
+using Business.Abstractions.IO.StoreProduct;
 using Business.Abstractions.IO.Store;
 using Business.Abstractions.IO.User;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +11,7 @@ namespace Api.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class StoreController : ControllerBase
+    public class StoreController : BaseController
     {
         private IStoreService _service;
 
@@ -51,6 +51,11 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] StoreFilter storeFilter)
         {
+            var idUserStores = IdsUserStoresSession();
+            if (idUserStores != null)
+            {
+                storeFilter.ListIdStore = idUserStores.ToList();
+            }
             return Ok(await _service.GetListAsync(storeFilter));
         }
     }

@@ -11,11 +11,11 @@ using MediatR;
 using Business.AutoMapper;
 using Business.Abstractions.Interfaces.IO;
 using Business.Abstractions.IO.CoreResult;
-using Business.Abstractions.IO.Product;
+using Business.Abstractions.IO.StoreProduct;
 using Business.Abstractions.Interfaces.Services;
 using Business.Services;
 using Business.Validations.User;
-using Business.Validations.Product;
+using Business.Validations.StoreProduct;
 using Business.Abstractions.IO.User;
 using FluentValidation.AspNetCore;
 using Business.Validations.Store;
@@ -39,7 +39,7 @@ namespace Infra.Ioc.Config
             services.AddScoped<IUserEFRepository, UserEFRepository>();
             services.AddScoped<IUserDapperRepository, UserDapperRepository>();
 
-            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IStoreProductService, StoreProductService>();
             services.AddScoped<IProductDapperRepository, ProductDapperRepository>();
             services.AddScoped<IProductEFRepository, ProductEFRepository>();
 
@@ -55,8 +55,8 @@ namespace Infra.Ioc.Config
         public static void RegisterFluentValidationAction(this IServiceCollection services)
         {
             services.AddFluentValidationAutoValidation();
-            services.AddTransient<IValidator<ProductInsertInput>, ProductInsertValidation>();
-            services.AddTransient<IValidator<ProductUpdateInput>, ProductUpdateValidation>();
+            services.AddTransient<IValidator<StoreProductInsertInput>, StoreProductInsertValidation>();
+            services.AddTransient<IValidator<StoreProductUpdateInput>, StoreProductUpdateValidation>();
 
             services.AddTransient<IValidator<UserInsertInput>, UserInsertInputValidator>();
             services.AddTransient<IValidator<UserUpdateInput>, UserUpdateInputValidator>();

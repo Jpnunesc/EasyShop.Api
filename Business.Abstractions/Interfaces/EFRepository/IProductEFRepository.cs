@@ -1,4 +1,4 @@
-﻿using Business.Abstractions.IO.Product;
+﻿using Business.Abstractions.IO.StoreProduct;
 using Entities.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,9 +10,10 @@ namespace Business.Abstractions.Interfaces.EFRepository
 {
     public interface IProductEFRepository : IBaseEFRepository<ProductEntity>
     {
-        Task<ProductEntity> SaveAsync(ProductEntity product);
-        Task<ProductEntity> UpdateAsync(ProductEntity product);
-        Task<ProductEntity> GetByIdAsync(int? idproduct);
-        Task DeleteAsync(ProductEntity product);
+        Task<StoreProductEntity> SaveStoreProductAsync(StoreProductEntity storeProduct);
+        Task<StoreProductEntity> UpdateStoreProductAsync(StoreProductEntity storeProduct);
+        Task<StoreProductEntity> GetByIdStoreProductAsync(int? idStoreProduct);
+        Task DeleteStoreProductAsync(StoreProductEntity storeProduct);
+        Task<(IEnumerable<StoreProductEntity> storeProductEntity, int totalRecords)> GetListAsync(StoreProductFilter productFilter);
     }
 }

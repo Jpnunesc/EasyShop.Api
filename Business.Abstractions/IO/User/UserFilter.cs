@@ -8,6 +8,7 @@ namespace Business.Abstractions.IO.User
 {
     public class UserFilter
     {
+        public List<int>? ListIdStore { get; set; }
         public int? IdUser { get; set; }
         public string? Name { get; set; }
         public string? Email { get; set; }

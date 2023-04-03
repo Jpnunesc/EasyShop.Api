@@ -9,6 +9,7 @@ namespace Business.Abstractions.IO.Store
 {
     public class StoreFilter
     {
+        public List<int>? ListIdStore { get; set; }
         public int? IdStore { get; set; }
         public string? Name { get; set; }
         public string? Cnpj { get; set; }

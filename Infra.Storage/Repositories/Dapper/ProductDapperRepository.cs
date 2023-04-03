@@ -5,7 +5,7 @@ using Dapper;
 using System.Text;
 using Infra.Storage.Dapper.Common;
 using Business.Abstractions.IO.Store;
-using Business.Abstractions.IO.Product;
+using Business.Abstractions.IO.StoreProduct;
 
 namespace Infra.Storage.Repositories.Dapper
 {
@@ -15,25 +15,35 @@ namespace Infra.Storage.Repositories.Dapper
         {
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetListAsync(ProductFilter productFilter)
+        public async Task<IEnumerable<StoreProductEntity>> GetListAsync(StoreProductFilter productFilter)
         {
-            var query = new StringBuilder(@"SELECT * FROM Product WHERE 1 = 1");
+            var query = new StringBuilder(@"SELECT * FROM StoreProduct WHERE 1 = 1");
             var parameters = new DynamicParameters();
 
-            if (productFilter.IdProduct.HasValue)
+            if (productFilter.IdStoreProduct.HasValue)
             {
-                query.Append(" AND IdProduct = @IdProduct");
-                parameters.Add("IdProduct", productFilter.IdProduct.Value);
+                query.Append(" AND IdStoreProduct = @IdStoreProduct");
+                parameters.Add("IdStoreProduct", productFilter.IdStoreProduct.Value);
             }
-            if (!string.IsNullOrEmpty(productFilter.Name))
+            if (productFilter.IdStore.HasValue)
             {
-                query.Append(" AND Name = @Name");
-                parameters.Add("Name", productFilter.Name);
+                query.Append(" AND IdStore = @IdStore");
+                parameters.Add("IdStore", productFilter.IdStore.Value);
+            }
+            if (!string.IsNullOrEmpty(productFilter.Description))
+            {
+                query.Append(" AND Description = @Description");
+                parameters.Add("Description", productFilter.Description);
             }
             if (!string.IsNullOrEmpty(productFilter.CodeNCM))
             {
                 query.Append(" AND CodeNCM = @CodeNCM");
                 parameters.Add("CodeNCM", productFilter.CodeNCM);
+            }
+            if (!string.IsNullOrEmpty(productFilter.CodeEAN))
+            {
+                query.Append(" AND CodeEAN = @CodeEAN");
+                parameters.Add("CodeEAN", productFilter.CodeEAN);
             }
             if (productFilter.Status.HasValue)
             {
@@ -41,7 +51,7 @@ namespace Infra.Storage.Repositories.Dapper
                 parameters.Add("Status", productFilter.Status.Value);
             }
 
-            var productList = await _session.Connection.QueryAsync<ProductEntity>(query.ToString(), parameters, transaction: _session.Transaction);
+            var productList = await _session.Connection.QueryAsync<StoreProductEntity>(query.ToString(), parameters, transaction: _session.Transaction);
             return productList;
         }
     }

@@ -12,7 +12,7 @@ namespace Business.Abstractions.Interfaces.Services
         Task<IResultOutput<UserOutputPaged>> GetListAsync(UserFilter userFilter);
         Task<IResultOutput<UserOutput>> DeleteAsync(int id);
         Task<IResultOutput<UserOutput>> GetByIdAsync(int id);
-        Task<IResultOutput<UserStoresLinkedUnlinkedOutput>> GetListUserStoresLinkedUnlinkedAsync(int id);
+        Task<IResultOutput<UserStoresLinkedUnlinkedOutput>> GetListUserStoresLinkedUnlinkedAsync(int id, List<int> idUserStores);
         Task<IResultOutput<UserStoreOutput>> PostListUserStoresLinkedUnlinkedAsync(IEnumerable<UserStoreInsertInput> userStoreInput);
         Task<IResultOutput<UserOutput>> DeleteUserStoresLinkedAsync(int id);
     }

@@ -1,5 +1,4 @@
-﻿using Business.Abstractions.IO.Product;
-using Business.Abstractions.IO.User;
+﻿
 using Business.Abstractions.IO.UserStore;
 using FluentValidation;
 using System;

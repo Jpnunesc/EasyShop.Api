@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Dapper.SqlMapper;
 
 namespace Infra.Storage.Mappings
 {
@@ -23,6 +24,8 @@ namespace Infra.Storage.Mappings
             builder.Property(u => u.Status).HasColumnName("Status").IsRequired();
             builder.Property(u => u.DateRegister).HasColumnName("DateRegister").IsRequired();
             builder.Property(u => u.Role).HasColumnName("Role").IsRequired();
+
+            //builder.HasMany(e => e.UserStores).WithOne().HasForeignKey(x => x.IdUser).HasPrincipalKey(u => u.IdUser);
 
         }
     }

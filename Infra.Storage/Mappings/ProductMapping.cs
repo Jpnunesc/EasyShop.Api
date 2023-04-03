@@ -16,11 +16,6 @@ namespace Infra.Storage.Mappings
                  .HasColumnName("IdProduct")
                  .ValueGeneratedOnAdd();
 
-            builder.Property(t => t.Name)
-                .HasColumnName("Name")
-                 .HasMaxLength(100)
-                .IsRequired();
-
             builder.Property(t => t.Status)
                 .HasColumnName("Status")
                  .HasMaxLength(1)
@@ -43,10 +38,6 @@ namespace Infra.Storage.Mappings
             builder.Property(t => t.Description)
                    .HasColumnName("Description")
                    .HasMaxLength(100);
-
-            builder.Property(t => t.Image)
-                   .HasColumnName("Image")
-                   .IsRequired();
 
         }
     }

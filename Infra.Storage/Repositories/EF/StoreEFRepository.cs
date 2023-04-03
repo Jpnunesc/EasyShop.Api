@@ -5,6 +5,7 @@ using Entities.Data;
 using Entities.Entities;
 using Infra.Storage.EF;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -116,6 +117,10 @@ namespace Infra.Storage.Repositories.EF
                 query = query.Where(s => s.PhoneNumber == storeFilter.PhoneNumber.Value);
             }
 
+            if (storeFilter.ListIdStore != null && storeFilter.ListIdStore.Any())
+            {
+                query = query.Where(s => storeFilter.ListIdStore.Contains(s.IdStore));
+            }
             //if (!string.IsNullOrEmpty(storeFilter.SortField))
             //{
             //    query = query.OrderBy($"{storeFilter.SortField} {storeFilter.SortOrder ?? "ASC"}");

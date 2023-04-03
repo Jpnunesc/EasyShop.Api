@@ -21,13 +21,17 @@ namespace Infra.Storage.Mappings
             builder.Property(sp => sp.Status).HasColumnName("Status").IsRequired();
 
             builder.Property(sp => sp.IdUser).HasColumnName("IdUser").IsRequired();
+
             builder.HasOne(sp => sp.User)
                    .WithMany()
-                   .HasForeignKey(sp => sp.IdUser);
+                           .HasForeignKey(us => us.IdUser)
+                           .HasPrincipalKey(u => u.IdUser);
+
             builder.Property(sp => sp.IdStore).HasColumnName("IdStore").IsRequired();
             builder.HasOne(sp => sp.Store)
                    .WithMany()
-                   .HasForeignKey(sp => sp.IdStore);
+                           .HasForeignKey(sp => sp.IdStore)
+                           .HasPrincipalKey(u => u.IdStore);
 
         }
     }
