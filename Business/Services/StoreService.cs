@@ -47,12 +47,12 @@ namespace Business.Services
             await _storeRepository.UnitOfWork.Commit();
             return _resultOutput.OperationOutputSuccess(new(), Messages.SuccessMessage);
         }
-        public async Task<IResultOutput<StoreOutputPaged>> GetListAsync(StoreFilter userFilter)
+        public async Task<IResultOutput<CoreOutputPaged<StoreOutput>>> GetListAsync(StoreFilter userFilter)
         {
-            var retorno = new ResultOutput<StoreOutputPaged>();
+            var retorno = new ResultOutput<CoreOutputPaged<StoreOutput>>();
             var storeList = await _storeRepository.GetListAsync(userFilter);
             var storeOutputList = _mapper.Map<IEnumerable<StoreEntity>, IEnumerable<StoreOutput>>(storeList.StoreEntity);
-            return retorno.OperationOutputSuccess(new() { ListStoreOutput = storeOutputList, TotalRecords = storeList.totalRecords }, Messages.SuccessMessage);
+            return retorno.OperationOutputSuccess(new() { ListOutput = storeOutputList, TotalRecords = storeList.totalRecords }, Messages.SuccessMessage);
         }
         public async Task<IResultOutput<StoreOutput>> DeleteAsync(int id)
         {

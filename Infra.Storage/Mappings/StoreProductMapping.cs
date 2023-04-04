@@ -39,10 +39,10 @@ namespace Infra.Storage.Mappings
                    .WithMany()
                    .HasForeignKey(sp => sp.IdStore);
 
-            builder.Property(sp => sp.IdSuppliersEntity).HasColumnName("IdSuppliersEntity");
+            builder.Property(sp => sp.IdSuppliers).HasColumnName("IdSuppliers");
             builder.HasOne(sp => sp.Suppliers)
                    .WithMany()
-                   .HasForeignKey(sp => sp.IdSuppliersEntity);
+                   .HasForeignKey(sp => sp.IdSuppliers);
         }
     }
 }

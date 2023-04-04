@@ -57,12 +57,12 @@ namespace Business.Services
             await _userRepository.UnitOfWork.Commit();
             return _resultOutput.OperationOutputSuccess(new(), Messages.SuccessMessage);
         }
-        public async Task<IResultOutput<UserOutputPaged>> GetListAsync(UserFilter userFilter)
+        public async Task<IResultOutput<CoreOutputPaged<UserOutput>>> GetListAsync(UserFilter userFilter)
         {
-            var retorno = new ResultOutput<UserOutputPaged>();
+            var retorno = new ResultOutput<CoreOutputPaged<UserOutput>>();
             var userList = await _userRepository.GetListAsync(userFilter);
             var userOutputList = _mapper.Map<IEnumerable<UserEntity>, IEnumerable<UserOutput>>(userList.UserEntity);
-            return retorno.OperationOutputSuccess(new() { ListUserOutput = userOutputList, TotalRecords = userList.totalRecords }, Messages.SuccessMessage);
+            return retorno.OperationOutputSuccess(new() { ListOutput = userOutputList, TotalRecords = userList.totalRecords }, Messages.SuccessMessage);
         }
         public async Task<IResultOutput<UserOutput>> DeleteAsync(int id)
         {

@@ -16,7 +16,7 @@ namespace Business.Abstractions.IO.StoreProduct
         public decimal? SalePrice { get; set; }
         public int? Unit { get; set; }
         public int? IdGroup { get; set; }
-        public int? IdSuppliersEntity { get; set; }
+        public int? IdSuppliers { get; set; }
         public string? CodeEAN { get; set; }
         public bool? SaleBreak { get; set; }
         public int? MinimumStock { get; set; }

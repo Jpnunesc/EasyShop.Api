@@ -13,7 +13,7 @@ namespace Business.Validations.Supplier
     {
         public SupplierUpdateValidation() 
         {
-            RuleFor(s => s.IdSuppliersEntity).NotEmpty().WithMessage("IdSuppliersEntity é obrigatório.");
+            RuleFor(s => s.IdSuppliers).NotEmpty().WithMessage("IdSuppliers é obrigatório.");
 
         }
     }

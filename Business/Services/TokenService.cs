@@ -55,7 +55,7 @@ namespace Business.Services
             }
 
             // O token não contém um claim "UserStores"
-            return null;
+            return new();
         }
     }
 }

@@ -41,9 +41,9 @@ namespace Infra.Storage.Repositories.EF
             return supplierEntity;
         }
 
-        public async Task<SuppliersEntity> GetByIdAsync(int? idSuppliersEntity)
+        public async Task<SuppliersEntity> GetByIdAsync(int? IdSuppliers)
         {
-            return await _context.Suppliers.Where(x => x.IdSuppliersEntity == idSuppliersEntity).FirstAsync();
+            return await _context.Suppliers.Where(x => x.IdSuppliers == IdSuppliers).FirstAsync();
         }
 
         public async Task DeleteAsync(SuppliersEntity supplierEntity)

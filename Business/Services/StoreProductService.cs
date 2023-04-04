@@ -50,12 +50,12 @@ namespace Business.Services
             return _resultOutput.OperationOutputSuccess(new(), Messages.SuccessMessage);
         }
 
-        public async Task<IResultOutput<StoreProductOutputPaged>> GetListAsync(StoreProductFilter productFilter)
+        public async Task<IResultOutput<CoreOutputPaged<StoreProductOutput>>> GetListAsync(StoreProductFilter productFilter)
         {
-            var retorno = new ResultOutput<StoreProductOutputPaged>();
-            var storeProductList = await _productRepository.GetListAsync(productFilter);
+            var retorno = new ResultOutput<CoreOutputPaged<StoreProductOutput>>();
+            var storeProductList = await _productDapperRepository.GetListAsync(productFilter);
             var storeProductOutputList = _mapper.Map<IEnumerable<StoreProductEntity>, IEnumerable<StoreProductOutput>>(storeProductList.storeProductEntity);
-            return retorno.OperationOutputSuccess(new() { ListStoreProductOutput = storeProductOutputList, TotalRecords = storeProductList.totalRecords }, Messages.SuccessMessage);
+            return retorno.OperationOutputSuccess(new() { ListOutput = storeProductOutputList, TotalRecords = storeProductList.totalRecords }, Messages.SuccessMessage);
         }
         public async Task<IResultOutput<StoreProductOutput>> DeleteAsync(int id)
         {

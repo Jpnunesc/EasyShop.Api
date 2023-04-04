@@ -6,6 +6,6 @@ namespace Business.Abstractions.Interfaces.DapperRepository
 {
     public interface IProductDapperRepository : IBaseDapperRepository<ProductEntity>
     {
-        Task<IEnumerable<StoreProductEntity>> GetListAsync(StoreProductFilter productFilter);
+        Task<(IEnumerable<StoreProductEntity> storeProductEntity, int totalRecords)> GetListAsync(StoreProductFilter filter);
     }
 }

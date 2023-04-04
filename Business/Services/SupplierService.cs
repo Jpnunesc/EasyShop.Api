@@ -5,6 +5,7 @@ using Business.Abstractions.Interfaces.DapperRepository;
 using Business.Abstractions.Interfaces.EFRepository;
 using Business.Abstractions.Interfaces.IO;
 using Business.Abstractions.Interfaces.Services;
+using Business.Abstractions.IO.CoreResult;
 using Business.Abstractions.IO.Store;
 using Business.Abstractions.IO.Supplier;
 using Business.Abstractions.IO.User;
@@ -33,24 +34,24 @@ namespace Business.Services
         public async Task<IResultOutput<SupplierOutput>> SaveAsync(SupplierInsertInput supplierInput)
         {
             var suppliersEntity = _mapper.Map<SupplierInsertInput, SuppliersEntity>(supplierInput);
-            suppliersEntity.SetStatusTrue();
             var savedSupplierEntity = await _supplierRepository.SaveAsync(suppliersEntity);
             var savedSupplierOutput = _mapper.Map<SuppliersEntity, SupplierOutput>(savedSupplierEntity);
             return _resultOutput.OperationOutputSuccess(savedSupplierOutput, Messages.SuccessMessage);
         }
         public async Task<IResultOutput<SupplierOutput>> UpdateAsync(SupplierUpdateInput supplierInput)
         {
-            var suppliersEntity = await _supplierRepository.GetByIdAsync(supplierInput.IdSuppliersEntity);
+            var suppliersEntity = await _supplierRepository.GetByIdAsync(supplierInput.IdSuppliers);
             var suppliersEntityMapping = _mapper.Map<SupplierUpdateInput, SuppliersEntity>(supplierInput);
             suppliersEntity.SetEntityUpdate(suppliersEntityMapping);
             await _supplierRepository.UnitOfWork.Commit();
             return _resultOutput.OperationOutputSuccess(new(), Messages.SuccessMessage);
         }
-        public async Task<IResultOutput<SupplierOutput>> GetListAsync(SupplierFilter supplierFilter)
+        public async Task<IResultOutput<CoreOutputPaged<SupplierOutput>>> GetListAsync(SupplierFilter supplierFilter)
         {
-            var supplierList = await _supplierDapperRepository.GetListAsync(supplierFilter);
-            var supplierOutputList = _mapper.Map<IEnumerable<SuppliersEntity>, IEnumerable<SupplierOutput>>(supplierList);
-            return _resultOutput.OperationListOutputSuccess(supplierOutputList, Messages.SuccessMessage);
+            var retorno = new ResultOutput<CoreOutputPaged<SupplierOutput>>();
+            var (suppliersEntity, totalRecords) = await _supplierDapperRepository.GetListAsync(supplierFilter);
+            var storeOutputList = _mapper.Map<IEnumerable<SuppliersEntity>, IEnumerable<SupplierOutput>>(suppliersEntity);
+            return retorno.OperationOutputSuccess(new() { ListOutput = storeOutputList, TotalRecords = totalRecords }, Messages.SuccessMessage);
         }
         public async Task<IResultOutput<SupplierOutput>> DeleteAsync(int id)
         {

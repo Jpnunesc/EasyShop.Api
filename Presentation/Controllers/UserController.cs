@@ -104,7 +104,8 @@ namespace Api.Controllers
             List<int> idUserStores = new();
             if (!UserIsManagerSession())
             {
-                idUserStores = IdsUserStoresSession().ToList();
+                var idsUserStoresSession = IdsUserStoresSession();
+                idUserStores = idsUserStoresSession != null && idsUserStoresSession.Any() ? idsUserStoresSession.ToList() : new();
             }
 
             return Ok(await _service.GetListUserStoresLinkedUnlinkedAsync(id, idUserStores));

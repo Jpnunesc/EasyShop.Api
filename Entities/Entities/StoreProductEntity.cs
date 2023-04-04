@@ -21,7 +21,7 @@ namespace Entities.Entities
         public decimal? SalePrice { get; set; }
         public int? Unit { get; set; }
         public int? IdGroup { get; set; }
-        public int? IdSuppliersEntity { get; set; }
+        public int? IdSuppliers { get; set; }
         public string? CodeEAN { get; set; }
         public bool? SaleBreak { get; set; }
         public int? MinimumStock { get; set; }
@@ -43,7 +43,7 @@ namespace Entities.Entities
         }
         public void SetSuppliersStandard(StoreProductEntity storeproduct)
         {
-            IdSuppliersEntity = storeproduct.IdSuppliersEntity != default ? storeproduct.IdSuppliersEntity : 5;
+            IdSuppliers = storeproduct.IdSuppliers != default ? storeproduct.IdSuppliers : 5;
         }
         public void SetEntityUpdate(StoreProductEntity storeproduct)
         {
@@ -54,7 +54,7 @@ namespace Entities.Entities
             SalePrice = storeproduct.SalePrice != default ? storeproduct.SalePrice : SalePrice;
             Unit = storeproduct.Unit != default ? storeproduct.Unit : Unit;
             IdGroup = storeproduct.IdGroup != default ? storeproduct.IdGroup : IdGroup;
-            IdSuppliersEntity = storeproduct.IdSuppliersEntity != default ? storeproduct.IdSuppliersEntity : IdSuppliersEntity;
+            IdSuppliers = storeproduct.IdSuppliers != default ? storeproduct.IdSuppliers : IdSuppliers;
             Description = !string.IsNullOrWhiteSpace(storeproduct.Description) ? storeproduct.Description : Description;
             CodeEAN = !string.IsNullOrWhiteSpace(storeproduct.CodeEAN) ? storeproduct.CodeEAN : CodeEAN;
             SaleBreak = storeproduct.SaleBreak != default ? storeproduct.SaleBreak : SaleBreak;

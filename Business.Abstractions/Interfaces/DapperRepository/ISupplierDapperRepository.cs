@@ -13,6 +13,6 @@ namespace Business.Abstractions.Interfaces.DapperRepository
 {
     public interface ISupplierDapperRepository : IBaseDapperRepository<SuppliersEntity>
     {
-        Task<IEnumerable<SuppliersEntity>> GetListAsync(SupplierFilter storeFilter);
+        Task<(IEnumerable<SuppliersEntity> suppliersEntity, int totalRecords)> GetListAsync(SupplierFilter filter);
     }
 }

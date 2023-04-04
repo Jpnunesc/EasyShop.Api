@@ -1,4 +1,5 @@
 ﻿using Business.Abstractions.Interfaces.IO;
+using Business.Abstractions.IO.CoreResult;
 using Business.Abstractions.IO.User;
 using Business.Abstractions.IO.UserStore;
 
@@ -9,7 +10,7 @@ namespace Business.Abstractions.Interfaces.Services
         Task<UserAuthOutput> AuthenticateAsync(string username, string password);
         Task<IResultOutput<UserOutput>> SaveAsync(UserInsertInput user);
         Task<IResultOutput<UserOutput>> UpdateAsync(UserUpdateInput user);
-        Task<IResultOutput<UserOutputPaged>> GetListAsync(UserFilter userFilter);
+        Task<IResultOutput<CoreOutputPaged<UserOutput>>> GetListAsync(UserFilter userFilter);
         Task<IResultOutput<UserOutput>> DeleteAsync(int id);
         Task<IResultOutput<UserOutput>> GetByIdAsync(int id);
         Task<IResultOutput<UserStoresLinkedUnlinkedOutput>> GetListUserStoresLinkedUnlinkedAsync(int id, List<int> idUserStores);

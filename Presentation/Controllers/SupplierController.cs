@@ -20,7 +20,7 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm] SupplierInsertInput supplier)
+        public async Task<IActionResult> Post([FromBody] SupplierInsertInput supplier)
         {
             return Ok(await _service.SaveAsync(supplier));
         }

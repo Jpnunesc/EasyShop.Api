@@ -85,9 +85,9 @@ namespace Infra.Storage.Repositories.EF
             {
                 query = query.Where(s => s.CodeNCM.Contains(productFilter.CodeNCM));
             }
-            //if (!string.IsNullOrEmpty(storeFilter.SortField))
+            //if (!string.IsNullOrEmpty(productFilter.SortField))
             //{
-            //    query = query.OrderBy($"{storeFilter.SortField} {storeFilter.SortOrder ?? "ASC"}");
+            //    query = query.OrderBy($"{productFilter.SortField} {productFilter.SortOrder ?? "ASC"}");
             //}
 
             var totalRecords = await query.CountAsync();
