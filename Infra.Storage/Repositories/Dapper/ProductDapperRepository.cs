@@ -76,6 +76,12 @@ namespace Infra.Storage.Repositories.Dapper
                 countQuery.Append(" AND CodeNCM LIKE @CodeNCM");
                 parameters.Add("@CodeNCM", "%" + productFilter.CodeNCM + "%");
             }
+            if (productFilter.IdSuppliers.HasValue)
+            {
+                query.Append(" AND IdSuppliers = @IdSuppliers");
+                countQuery.Append(" AND IdSuppliers = @IdSuppliers");
+                parameters.Add("@IdSuppliers", productFilter.IdSuppliers.Value);
+            }
             countQuery.Append(";");
 
             query.Append(@"

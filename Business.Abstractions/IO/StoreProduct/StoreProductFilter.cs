@@ -12,5 +12,6 @@ namespace Business.Abstractions.IO.StoreProduct
         public string? CodeEAN { get; set; }
         public string? Description { get; set; }
         public bool? Status { get; set; }
+        public int? IdSuppliers { get; set; }
     }
 }
