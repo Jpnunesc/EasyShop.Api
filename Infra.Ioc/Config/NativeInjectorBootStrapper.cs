@@ -51,6 +51,10 @@ namespace Infra.Ioc.Config
             services.AddScoped<ISupplierEFRepository, SupplierEFRepository>();
             services.AddScoped<ISupplierDapperRepository, SupplierDapperRepository>();
 
+            services.AddScoped<IInventoryDapperRepository, InventoryDapperRepository>();
+            services.AddScoped<IInventoryEFRepository, InventoryEFRepository>();
+            services.AddScoped<IInventoryService, InventoryService>();
+
         }
         public static void RegisterFluentValidationAction(this IServiceCollection services)
         {

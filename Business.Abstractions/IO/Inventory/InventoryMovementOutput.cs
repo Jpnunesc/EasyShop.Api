@@ -1,13 +1,13 @@
-﻿using Entities.Data;
+﻿using Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Entities
+namespace Business.Abstractions.IO.Inventory
 {
-    public class InventoryMovementEntity : IAggregateRoot
+    public class InventoryMovementOutput
     {
         public Guid IdInventoryMovement { get; set; }
         public DateTime DateRegister { get; set; }
@@ -20,22 +20,6 @@ namespace Entities.Entities
         public decimal? Discount { get; set; }
         public decimal? Increase { get; set; }
         public decimal? TotalPriceOperation { get; set; }
-        public IEnumerable<StoreProductMovementEntity> StoreProductMovement { get; set; }
-
-        public void SumTotalPriceProducts()
-        {
-            if(StoreProductMovement.Any())
-            {
-                TotalPriceProducts = StoreProductMovement.Sum(x => x.PriceTotalItens / x.Amount);
-            }
-        }
-        public void SumTotalPriceOperation()
-        {
-            if (StoreProductMovement.Any())
-            {
-                TotalPriceOperation = StoreProductMovement.Sum(x => x.PriceTotalItens / x.Amount) - Discount + Increase;
-            }
-        }
-
+        public IEnumerable<StoreProductMovementOutput> StoreProductMovement { get; set; }
     }
 }

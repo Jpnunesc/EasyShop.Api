@@ -19,6 +19,8 @@ namespace Infra.Storage.EF
         public virtual DbSet<SuppliersEntity> Suppliers { get; set; }
         public virtual DbSet<UserEntity> Users { get; set; }
         public virtual DbSet<UserStoreEntity> UserStores { get; set; }
+        public virtual DbSet<InventoryMovementEntity> InventoryMovement { get; set; }
+        public virtual DbSet<StoreProductMovementEntity> StoreProductMovement { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

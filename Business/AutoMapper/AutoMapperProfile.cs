@@ -5,6 +5,7 @@ using Business.Abstractions.IO.Supplier;
 using Business.Abstractions.IO.User;
 using Business.Abstractions.IO.UserStore;
 using Entities.Entities;
+using Business.Abstractions.IO.Inventory;
 
 namespace Presentation.Api.AutoMapper
 {
@@ -37,7 +38,11 @@ namespace Presentation.Api.AutoMapper
             CreateMap<UserStoreInsertInput, UserStoreEntity>();
             CreateMap<UserStoreEntity, UserStoreOutput>();
 
+            CreateMap<InventoryMovementEntity, InventoryMovementOutput>();
+            CreateMap<InventoryMovementInsertInput, InventoryMovementEntity>();
 
+            CreateMap<StoreProductMovementInput, StoreProductMovementEntity>();
+            CreateMap<StoreProductMovementEntity, StoreProductMovementOutput>();
         }
     }
 }

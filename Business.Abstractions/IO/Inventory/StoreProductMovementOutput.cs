@@ -1,13 +1,13 @@
-﻿using Entities.Data;
+﻿using Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Entities
+namespace Business.Abstractions.IO.Inventory
 {
-    public class StoreProductMovementEntity : IAggregateRoot
+    public class StoreProductMovementOutput
     {
         public Guid IdStoreProductMovement { get; set; }
         public Guid IdInventoryMovement { get; set; }
@@ -15,8 +15,5 @@ namespace Entities.Entities
         public DateTime DateRegister { get; set; }
         public int Amount { get; set; }
         public decimal? PriceTotalItens { get; set; }
-        public StoreProductEntity StoreProduct { get; set; }
-        public InventoryMovementEntity InventoryMovement { get; set; }
-      
     }
 }
